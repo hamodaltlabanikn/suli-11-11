@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suli 11:11 Lounge — القائمة الرقمية</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23241505'/><text x='50' y='72' font-size='58' font-family='Georgia,serif' font-weight='bold' text-anchor='middle' fill='%23D9B25C'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;600;700;800&family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SULI 11:11 LOUNGE — القائمة الرقمية | HTML & CSS فقط
+   طبقات الصور: ملف محلي (images/) ← Unsplash ← Pexels
+   الملفات المطلوبة في مجلد images :
+     hookah-apple.jpg | hookah-grape.jpg | hookah-mix.jpg | water-1111.jpg
+   ============================================================ */
+:root{
+  --bg:#F3E9D5;            --card:#FBF5E8;
+  --thumb:#EFE2C8;         --ink:#2E1D0F;
+  --muted:#96815E;         --line:#DECBA4;
+  --brown:#4A2E14;         --brown-2:#241505;
+  --gold:#C9A24B;          --gold-text:#8F6A22;
+  --gold-soft:rgba(201,162,75,.45);
+  --green:#2E7D4F;         --green-2:#1C5A37;
+  --green-soft:rgba(46,125,79,.38);
+  --acc-main:#96601F;      --acc-drinks:#2E7D4F;   --acc-hookah:#6B4423;
+  --cream:#F7F0DF;         --dark:#140C04;
+  --dot:rgba(74,46,31,.11);
+  --shadow-sm:0 4px 14px rgba(46,29,15,.09);
+  --shadow-lg:0 18px 38px rgba(46,29,15,.18);
+}
+#theme:checked ~ .site{
+  --bg:#191008;            --card:#221609;
+  --thumb:#251A0C;         --ink:#F2E6CB;
+  --muted:#B39B72;         --line:#3C2C14;
+  --gold:#DCB668;          --gold-text:#E3C476;
+  --gold-soft:rgba(220,182,104,.5);
+  --green:#3FA96E;         --green-2:#2A7A4C;
+  --green-soft:rgba(63,169,110,.42);
+  --acc-main:#DCB668;      --acc-drinks:#3FA96E;   --acc-hookah:#B7854E;
+  --dot:rgba(244,235,222,.05);
+  --shadow-sm:0 4px 16px rgba(0,0,0,.4);
+  --shadow-lg:0 18px 40px rgba(0,0,0,.55);
+}
+/* ==================== أساسيات ==================== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);min-height:100vh;
+  font-family:'Poppins','Vazirmatn','Noto Naskh Arabic',sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+.st{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;margin:0}
+.site{min-height:100vh;background:var(--bg);color:var(--ink);position:relative;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .4s ease,color .4s ease}
+#lang-ar:checked ~ .site,
+#lang-ku:checked ~ .site{direction:rtl;
+  font-family:'Vazirmatn','Noto Naskh Arabic','Poppins',sans-serif}
+.t{display:none}
+#lang-en:checked ~ .site .t-en{display:inline}
+#lang-ar:checked ~ .site .t-ar{display:inline}
+#lang-ku:checked ~ .site .t-ku{display:inline}
+.t-ku,.ku{font-family:'Vazirmatn','Noto Naskh Arabic','Noto Sans Arabic',Tahoma,sans-serif}
+h2,h3,.price b,.splash-word{
+  font-family:'Playfair Display','Amiri','Vazirmatn',serif}
+.ic{display:block;fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round}
+/* ==================== لوكو الهيدر — 11:11 سادة ==================== */
+.brand-num{
+  display:inline-flex;align-items:baseline;line-height:1;direction:ltr;
+  font-family:'Playfair Display',Georgia,serif;font-weight:800;
+  font-size:clamp(23px,6vw,28px);letter-spacing:1.5px;color:#C9A24B;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.15))}
+.brand-num i{font-style:normal;padding:0 .02em;animation:sPulse 2.2s ease-in-out infinite}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .brand-num{
+    background:linear-gradient(180deg,#F8ECB0 0%,#E9CB6E 35%,#C1953B 68%,#96702A 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}}
+/* ==================== ميدالية اللوكو — شاشة اللغة ==================== */
+.seal{
+  --s1:#16294A;--s2:#0B1729;--s3:#060D1B;
+  --m1:#FBF2D4;--m2:#EACB7F;--m3:#B8912F;
+  position:relative;width:clamp(158px,44vw,208px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(125% 115% at 50% -6%,var(--s1),var(--s2) 52%,var(--s3) 100%);
+  box-shadow:0 30px 66px rgba(6,13,26,.5),
+             0 9px 22px rgba(6,13,26,.32),
+             inset 0 2px 0 rgba(251,242,212,.1),
+             inset 0 -18px 38px rgba(0,0,0,.5);
+  display:grid;place-items:center;direction:ltr}
+.seal::before{content:"";position:absolute;inset:-36px;border-radius:50%;z-index:0;
+  background:radial-gradient(closest-side,rgba(234,203,127,.18),rgba(234,203,127,.05) 55%,transparent 75%)}
+.seal::after{content:"";position:absolute;inset:9px;border-radius:50%;z-index:2;pointer-events:none;
+  background:linear-gradient(152deg,rgba(255,255,255,.11),transparent 30%,transparent 72%,rgba(255,255,255,.05));
+  mix-blend-mode:screen}
+.seal-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.seal-txt{font-family:'Poppins',sans-serif;font-size:23px;font-weight:700;letter-spacing:9px;fill:url(#sealMetal)}
+.seal-dots{transform-box:fill-box;transform-origin:center;animation:sSpin 80s linear infinite}
+.seal-core{position:absolute;inset:0;z-index:1;display:grid;place-content:center;justify-items:center;gap:8px}
+.s-row{display:flex;align-items:baseline;line-height:1;font-family:'Playfair Display','Amiri',serif}
+.s-num{font-size:clamp(36px,10vw,54px);font-weight:800;letter-spacing:2px;color:var(--m2)}
+.s-colon{font-size:clamp(27px,7.5vw,40px);font-weight:800;padding:0 .08em;
+  transform:translateY(-.04em);animation:sPulse 2.2s ease-in-out infinite;color:var(--m2)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .s-num,.s-colon{
+    background:linear-gradient(180deg,var(--m1) 0%,var(--m2) 38%,var(--m3) 72%,var(--m2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}}
+.s-div{position:relative;width:clamp(58px,19vw,86px);height:1px;
+  background:linear-gradient(90deg,transparent,var(--m2) 22%,var(--m2) 78%,transparent)}
+.s-div::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;
+  transform:translate(-50%,-50%) rotate(45deg);background:var(--m2);
+  box-shadow:0 0 0 3px var(--s2)}
+.s-tag{font-family:'Poppins',sans-serif;font-size:8.5px;font-weight:700;
+  letter-spacing:.4em;padding-left:.4em;color:#B9C9E2}
+#theme:checked ~ .site .seal::before{
+  background:radial-gradient(closest-side,rgba(234,203,127,.26),rgba(234,203,127,.06) 55%,transparent 75%)}
+/* ==================== الخلفية الزخرفية ==================== */
+.decor{position:fixed;inset:0;z-index:0;pointer-events:none}
+.decor::before{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(var(--dot) 1.3px,transparent 1.3px);
+  background-size:22px 22px}
+.decor::after{content:"";position:absolute;inset:0;background:
+   radial-gradient(600px 460px at 85% -12%, rgba(150,96,31,.20), transparent 62%),
+   radial-gradient(560px 430px at -12% 112%, rgba(74,46,20,.20), transparent 62%),
+   radial-gradient(560px 440px at 108% 104%, rgba(46,125,79,.20), transparent 62%),
+   radial-gradient(380px 300px at 0% 0%, rgba(46,125,79,.10), transparent 60%)}
+#theme:checked ~ .site .decor::after{opacity:.6}
+/* ==================== تبديل الشاشات ==================== */
+.screen{display:none;position:relative;z-index:1}
+#lang-pick:checked ~ .site .screen-lang{
+  display:grid;place-items:center;padding:30px 20px;
+  min-height:100vh;min-height:100dvh}
+#lang-en:checked ~ .site .screen-menu,
+#lang-ar:checked ~ .site .screen-menu,
+#lang-ku:checked ~ .site .screen-menu{
+  display:block;min-height:100vh;min-height:100dvh;
+  animation:menuIn .7s cubic-bezier(.22,1,.36,1) .35s both}
+/* ==================== شاشة اللغة ==================== */
+.lang-wrap{width:min(420px,100%);text-align:center;display:grid;justify-items:center;position:relative;z-index:1}
+.tri{font-size:21px;font-weight:700;margin-top:22px;line-height:1.7;
+  font-family:'Playfair Display','Amiri','Vazirmatn',serif}
+.hint{color:var(--muted);font-size:13.5px;font-weight:600;margin-top:8px;line-height:1.9;max-width:350px}
+.tri span,.hint span{unicode-bidi:isolate}
+.tri i,.hint i{font-style:normal;font-weight:800;margin:0 9px}
+.tri i:nth-of-type(1),.hint i:nth-of-type(1){color:var(--green)}
+.tri i:nth-of-type(2),.hint i:nth-of-type(2){color:var(--gold-text)}
+.lang-btns{display:grid;gap:12px;margin-top:30px;width:100%}
+.lang-btn{
+  display:grid;place-items:center;padding:15px 18px;border-radius:14px;
+  background:var(--card);border:1px solid var(--line);color:var(--ink);
+  font-size:16.5px;font-weight:700;box-shadow:var(--shadow-sm);cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  transition:transform .25s,box-shadow .25s,border-color .25s,background-color .3s}
+.lang-btn:hover{transform:translateY(-3px);border-color:var(--gold);
+  box-shadow:0 14px 28px rgba(201,162,75,.22)}
+.lang-btn:active{transform:scale(.96)}
+#lang-pick:checked ~ .site .la{
+  animation:fadeUp .6s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:var(--d,0ms)}
+/* ==================== رأس المنيو ==================== */
+.sticky-head{position:sticky;top:0;z-index:30;
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+.topbar-in{max-width:940px;margin:0 auto;padding:12px 16px 8px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-row{display:flex;align-items:baseline;gap:11px}
+.sub{font-size:11.5px;font-weight:600;color:var(--muted)}
+.actions{display:flex;align-items:center;gap:8px}
+.pill,.icon-btn{
+  display:flex;align-items:center;gap:7px;background:var(--card);
+  border:1px solid var(--line);border-radius:999px;color:var(--ink);
+  font-size:13px;font-weight:700;padding:9px 14px;cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  transition:transform .25s,border-color .25s,background-color .3s}
+.pill .ic,.icon-btn .ic{width:16px;height:16px}
+.icon-btn{width:38px;height:38px;justify-content:center;padding:0;border-radius:50%}
+.pill:hover,.icon-btn:hover{transform:translateY(-2px);border-color:var(--gold)}
+.pill:active,.icon-btn:active{transform:scale(.94)}
+.icon-sun{display:none}
+#theme:checked ~ .site .icon-sun{display:block}
+#theme:checked ~ .site .icon-moon{display:none}
+/* ==================== أزرار التصنيف ==================== */
+.chips-in{display:flex;gap:8px;overflow-x:auto;padding:6px 16px 14px;
+  max-width:940px;margin:0 auto;scrollbar-width:none}
+.chips-in::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;display:flex;align-items:center;gap:7px;white-space:nowrap;
+  padding:9px 15px;border-radius:999px;background:var(--card);
+  border:1px solid var(--line);color:var(--ink);
+  font-size:13px;font-weight:700;cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  transition:transform .25s,border-color .25s,background-color .3s,box-shadow .25s}
+.chip .ic{width:17px;height:19px;flex:0 0 auto;opacity:.85}
+.chip:hover{border-color:var(--gold);transform:translateY(-2px)}
+.chip:active{transform:scale(.95)}
+#f-all:checked    ~ .site .chip[for="f-all"],
+#f-main:checked   ~ .site .chip[for="f-main"],
+#f-drinks:checked ~ .site .chip[for="f-drinks"],
+#f-hookah:checked ~ .site .chip[for="f-hookah"]{
+  background:linear-gradient(135deg,#4A2E14,#241505);
+  border-color:var(--gold-soft);color:#F1DEB2;
+  box-shadow:0 8px 18px rgba(36,21,5,.35)}
+#f-drinks:checked ~ .site .chip[for="f-drinks"]{
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  border-color:var(--green-soft);color:#EAF5EE;
+  box-shadow:0 8px 18px rgba(28,90,55,.35)}
+#theme:checked ~ .site .chip[for="f-all"],
+#theme:checked ~ .site .chip[for="f-main"],
+#theme:checked ~ .site .chip[for="f-drinks"],
+#theme:checked ~ .site .chip[for="f-hookah"]{box-shadow:0 8px 18px rgba(0,0,0,.5)}
+/* ==================== إظهار/إخفاء الأقسام ==================== */
+.menu-sec{display:none}
+#f-all:checked    ~ .site .menu-sec{display:block}
+#f-main:checked   ~ .site .sec-main{display:block}
+#f-drinks:checked ~ .site .sec-drinks{display:block}
+#f-hookah:checked ~ .site .sec-hookah{display:block}
+/* ==================== الأقسام + الميداليات ==================== */
+.wrap{max-width:940px;margin:0 auto;padding:6px 16px 8px}
+.sec-main  {--acc:var(--acc-main)}
+.sec-drinks{--acc:var(--acc-drinks)}
+.sec-hookah{--acc:var(--acc-hookah)}
+.sec-head{display:flex;align-items:center;gap:13px;margin:26px 0 14px}
+.sec-head::before,.sec-head::after{content:"";flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--acc) 60%,transparent),transparent)}
+.sec-head h2{font-size:20px;font-weight:700;letter-spacing:.5px}
+.sic-b{width:46px;height:46px;border-radius:50%;flex:0 0 auto;
+  display:grid;place-items:center;color:var(--acc);
+  background:color-mix(in srgb,var(--acc) 10%,var(--card));
+  border:1px solid color-mix(in srgb,var(--acc) 42%,transparent);
+  box-shadow:0 6px 14px color-mix(in srgb,var(--acc) 20%,transparent),
+             inset 0 0 0 3px color-mix(in srgb,var(--acc) 12%,transparent)}
+.sic-b .ic{width:26px;height:30px}
+/* ==================== كروت الأصناف ==================== */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{
+  position:relative;background:var(--card);
+  border:1px solid color-mix(in srgb,var(--brown) 30%,var(--line));
+  border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow-sm);
+  transition:transform .3s,box-shadow .3s,border-color .3s,background-color .3s}
+.card::after{content:"";position:absolute;inset:6px;
+  border:1px solid color-mix(in srgb,var(--gold) 32%,transparent);
+  border-radius:9px;pointer-events:none;z-index:4}
+.sec-drinks .card::after{border-color:color-mix(in srgb,var(--green) 32%,transparent)}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);
+  border-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+.card:active{transform:scale(.97)}
+.thumb{position:relative;height:150px;overflow:hidden;
+  background:color-mix(in srgb,var(--acc) 10%,var(--thumb))}
+.thumb .fb{position:absolute;inset:0;display:grid;place-items:center;
+  color:var(--acc);opacity:.9;
+  background:color-mix(in srgb,var(--acc) 12%,var(--thumb))}
+.thumb .fb .ic{width:46px;height:50px}
+/* طبقات الصورة: محلي ← Unsplash ← Pexels (CSS يكرر القيم تلقائياً) */
+.ph{position:absolute;inset:0;display:block;
+  background-size:cover,cover,cover;background-position:center,center,center;
+  filter:sepia(.07) saturate(1.1) contrast(1.02);
+  transition:transform .55s cubic-bezier(.22,1,.36,1)}
+#theme:checked ~ .site .ph{filter:sepia(.05) saturate(1.05) brightness(.92)}
+.card:hover .ph{transform:scale(1.09)}
+.thumb::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,transparent 62%,rgba(20,12,4,.22))}
+.meta{padding:11px 14px 13px;display:grid;gap:3px;text-align:center}
+.meta h3{font-size:15.5px;font-weight:700;line-height:1.55}
+.price{display:flex;align-items:baseline;justify-content:center;gap:6px;
+  font-size:15px;font-weight:800;color:var(--acc)}
+.price .cur{font-size:10.5px;font-weight:700;color:var(--muted);
+  font-family:'Poppins','Vazirmatn',sans-serif}
+#lang-ar:checked ~ .site .price .cur,
+#lang-ku:checked ~ .site .price .cur{order:2}
+/* ==================== كارت "بل ماء 11:11" المميز ==================== */
+.card-1111{border-color:color-mix(in srgb,var(--gold) 58%,transparent);
+  box-shadow:0 6px 20px rgba(201,162,75,.16),var(--shadow-sm)}
+.card-1111::after{border-color:color-mix(in srgb,var(--gold) 60%,transparent)}
+.badge-1111{position:absolute;top:9px;left:50%;transform:translateX(-50%);z-index:5;
+  pointer-events:none;background:linear-gradient(135deg,#1E1207,#0E0803);
+  border:1px solid rgba(217,178,92,.55);border-radius:999px;
+  padding:4px 11px calc(4px + .22em);box-shadow:0 4px 10px rgba(20,12,4,.45);
+  font-family:'Poppins',sans-serif;font-size:8.5px;font-weight:800;
+  letter-spacing:.22em;text-transform:uppercase;color:#E9CB6E}
+/* ==================== الفوتر ==================== */
+.foot{max-width:940px;margin:0 auto;display:grid;justify-items:center;gap:8px;
+  padding:40px 16px 48px;color:var(--muted);text-align:center}
+.foot p{font-size:12px;font-weight:600}
+.foot-line{width:160px;height:2px;border-radius:99px;
+  background:linear-gradient(90deg,var(--gold-soft),var(--green-soft),var(--gold-soft))}
+/* ==================== حركات الظهور ==================== */
+#f-all:checked    ~ .site .wrap .anim{
+  animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:calc(var(--so,0ms) + var(--si,0)*55ms)}
+#f-main:checked   ~ .site .sec-main .anim,
+#f-drinks:checked ~ .site .sec-drinks .anim,
+#f-hookah:checked ~ .site .sec-hookah .anim{
+  animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:calc(var(--si,0)*60ms)}
+/* ==================== الستارة — 3 بني : 2 أخضر ==================== */
+.curtain{position:fixed;inset:0;z-index:80;display:none;pointer-events:none}
+#lang-en:checked ~ .site .curtain,
+#lang-ar:checked ~ .site .curtain,
+#lang-ku:checked ~ .site .curtain{display:flex}
+.curtain i{flex:1;transform:scaleY(0);transform-origin:bottom}
+.curtain i:nth-child(1){background:linear-gradient(180deg,#4A2E14,#1E1004)}
+.curtain i:nth-child(2){background:linear-gradient(180deg,#2E7D4F,#143A25)}
+.curtain i:nth-child(3){background:linear-gradient(180deg,#3A2412,#160C03)}
+.curtain i:nth-child(4){background:linear-gradient(180deg,#276842,#102F1E)}
+.curtain i:nth-child(5){background:linear-gradient(180deg,#2C1A0C,#120A03)}
+#lang-en:checked ~ .site .curtain i,
+#lang-ar:checked ~ .site .curtain i,
+#lang-ku:checked ~ .site .curtain i{
+  animation:curtainSweep .85s cubic-bezier(.77,0,.18,1) both;
+  animation-delay:calc(.4s + var(--cd,0s))}
+.curtain i:nth-child(1){--cd:0s}
+.curtain i:nth-child(2){--cd:.05s}
+.curtain i:nth-child(3){--cd:.1s}
+.curtain i:nth-child(4){--cd:.15s}
+.curtain i:nth-child(5){--cd:.2s}
+/* ==================== سبلاش الترحيب ==================== */
+.splash{position:fixed;inset:0;z-index:90;display:grid;place-items:center;
+  pointer-events:none;opacity:0;visibility:hidden;background:rgba(16,9,3,.66)}
+#lang-en:checked ~ .site .splash,
+#lang-ar:checked ~ .site .splash,
+#lang-ku:checked ~ .site .splash{animation:splashSeq 1.9s ease both}
+.splash-box{position:relative;display:grid;justify-items:center;gap:14px;transform:scale(.7)}
+#lang-en:checked ~ .site .splash-box,
+#lang-ar:checked ~ .site .splash-box,
+#lang-ku:checked ~ .site .splash-box{animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .12s both}
+.splash-box::before{content:"";position:absolute;inset:-70px -140px;z-index:-1;
+  background:radial-gradient(closest-side,rgba(220,182,104,.12),transparent 70%)}
+.splash-word{font-size:clamp(24px,5.5vw,34px);font-weight:700;color:#E9CB6E;letter-spacing:.5px}
+.splash-dash{width:64px;height:3px;border-radius:99px;
+  background:linear-gradient(90deg,#8F5B23,#3FA96E,#8F5B23);
+  box-shadow:0 2px 12px rgba(63,169,110,.35)}
+/* ==================== الإطارات المفتاحية ==================== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes menuIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes curtainSweep{from{transform:scaleY(1)}to{transform:scaleY(0)}}
+@keyframes splashSeq{0%{opacity:0;visibility:visible}14%{opacity:1}64%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes popIn{from{transform:scale(.7)}to{transform:scale(1)}}
+@keyframes sPulse{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes sSpin{to{transform:rotate(360deg)}}
+/* ==================== تجاوب ==================== */
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- ====== مخزن الأيقونات (Sprite) ====== -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-grid" viewBox="0 0 24 24">
+      <rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/>
+      <rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/>
+    </symbol>
+    <symbol id="i-dishes" viewBox="0 0 24 24">
+      <path d="M2.5 4v3a2 2 0 0 0 4 0V4"/><path d="M4.5 4v5"/><path d="M4.5 9v11"/>
+      <path d="M21.5 4c-1.8 1.5-3 4.4-3 7.3 0 1.1.9 2.2 2 2.2h1V20"/>
+      <ellipse cx="12" cy="16.6" rx="6" ry="2.1"/><path d="M7.5 15.6a4.5 4.5 0 0 1 9 0"/>
+      <circle cx="12" cy="10" r="1"/>
+      <path d="M10.7 7.3c-.6-.8.5-1.4-.1-2.3"/><path d="M13.3 7.3c-.6-.8.5-1.4-.1-2.3"/>
+    </symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24">
+      <path d="M9 7.5h9.4"/><path d="M9.6 7.5l1.6 12a2 2 0 0 0 2 1.8h1.6a2 2 0 0 0 2-1.8l1.6-12"/>
+      <circle cx="7.5" cy="6.5" r="3.2"/><path d="M7.5 3.3v6.4M4.3 6.5h6.4M5.25 4.25l4.5 4.5"/>
+      <path d="M16 17 20.5 3"/><path d="M17.6 12.1l1.8.6M18.7 8.6l1.8.6"/>
+      <rect x="11" y="12.5" width="3.6" height="3.6" rx=".8" transform="rotate(-12 12.8 14.3)"/>
+      <rect x="13.8" y="16" width="3" height="3" rx=".8" transform="rotate(15 15.3 17.5)"/>
+      <circle fill="currentColor" stroke="none" cx="11.5" cy="19.4" r=".7"/>
+      <circle fill="currentColor" stroke="none" cx="17.2" cy="11.2" r=".7"/>
+      <circle fill="currentColor" stroke="none" cx="14.4" cy="20.6" r=".6"/>
+    </symbol>
+    <symbol id="i-nargile" viewBox="0 0 24 28">
+      <path d="M10.4 4.3c-.5-.7.4-1.2-.1-2M13.6 4.3c-.5-.7.4-1.2-.1-2"/>
+      <path d="M9.6 6h4.8"/><path d="M10.1 6l.75 3a1.2 1.2 0 0 0 1.16.9h.18a1.2 1.2 0 0 0 1.16-.9L14.1 6"/>
+      <path d="M7.6 10.4h8.8"/><path d="M11.3 10.4c-.4 1.7-.5 3-.1 4.2M12.7 10.4c.4 1.7.5 3 .1 4.2"/>
+      <circle cx="12" cy="15.8" r="1.1"/><path d="M12 16.9v1.6"/>
+      <path d="M9.7 18.5c-1.3 1-2.1 2.2-2.1 3.2 0 1.1 1 1.8 2.1 1.8h4.6c1.1 0 2.1-.7 2.1-1.8 0-1-.8-2.2-2.1-3.2"/>
+      <path d="M16.4 20.4c3.8.2 5.6 1.6 5.6 3.5 0 2-2.6 3-6.9 3.1"/><path d="M14.6 27h-5.4"/>
+      <circle fill="currentColor" stroke="none" cx="8.7" cy="27" r=".45"/>
+    </symbol>
+    <symbol id="i-fries" viewBox="0 0 24 24">
+      <path d="M8.6 10.5V4.8"/><path d="M12 10.5V3.4"/><path d="M15.4 10.5V4.8"/>
+      <path d="M10.3 10.5V5.8"/><path d="M13.7 10.5V5.8"/>
+      <path d="M6.4 10.5h11.2l-1.3 8.6a2 2 0 0 1-2 1.7H9.7a2 2 0 0 1-2-1.7L6.4 10.5Z"/>
+      <path d="M8.3 14.3h7.4"/>
+    </symbol>
+    <symbol id="i-chicken" viewBox="0 0 24 24">
+      <ellipse cx="15.2" cy="8.8" rx="4.6" ry="3.9" transform="rotate(-45 15.2 8.8)"/>
+      <path d="M11.95 12.05 6.9 17.1"/>
+      <circle cx="7.5" cy="17.7" r="1.2"/><circle cx="6.3" cy="16.5" r="1.2"/>
+    </symbol>
+    <symbol id="i-kebab" viewBox="0 0 24 24">
+      <path d="M2.8 21.2 21.2 2.8"/>
+      <rect x="7.3" y="13.3" width="3.4" height="3.4" rx="1" transform="rotate(45 9 15)"/>
+      <rect x="10.3" y="10.3" width="3.4" height="3.4" rx="1" transform="rotate(45 12 12)"/>
+      <rect x="13.3" y="7.3" width="3.4" height="3.4" rx="1" transform="rotate(45 15 9)"/>
+    </symbol>
+    <symbol id="i-grill" viewBox="0 0 24 24">
+      <path d="M2.8 21.2 21.2 2.8"/><path d="M2.8 2.8 21.2 21.2"/>
+      <rect x="5.4" y="5.4" width="3.2" height="3.2" rx=".9" transform="rotate(45 7 7)"/>
+      <rect x="15.4" y="15.4" width="3.2" height="3.2" rx=".9" transform="rotate(45 17 17)"/>
+      <rect x="7.4" y="13.4" width="3.2" height="3.2" rx=".9" transform="rotate(45 9 15)"/>
+      <rect x="13.4" y="7.4" width="3.2" height="3.2" rx=".9" transform="rotate(45 15 9)"/>
+    </symbol>
+    <symbol id="i-juice" viewBox="0 0 24 24">
+      <path d="M9.5 7h8"/>
+      <path d="M17.5 7l-1.4 11.3a2.3 2.3 0 0 1-2.3 2h-.6a2.3 2.3 0 0 1-2.3-2L9.5 7"/>
+      <path d="M10.8 11.5h6"/><path d="M14.6 7 17 2.2"/>
+      <circle cx="8.2" cy="5.8" r="2.7"/><path d="M8.2 3.1v5.4M5.5 5.8h5.4"/>
+      <circle fill="currentColor" stroke="none" cx="12.6" cy="14.8" r=".6"/>
+      <circle fill="currentColor" stroke="none" cx="15" cy="16.8" r=".5"/>
+      <circle fill="currentColor" stroke="none" cx="12.9" cy="17.9" r=".45"/>
+    </symbol>
+    <symbol id="i-pepsi" viewBox="0 0 24 24">
+      <path d="M6.8 6.8v10.4c0 1 2.3 1.9 5.2 1.9s5.2-.9 5.2-1.9V6.8"/>
+      <ellipse cx="12" cy="6.8" rx="5.2" ry="1.9"/>
+      <path d="M7.3 12.2c1.6-1.1 3.1-1.1 4.7 0s3.1 1.1 4.7 0"/>
+      <circle cx="12" cy="6.8" r=".7"/>
+    </symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24">
+      <path d="M12 2.7s6.5 7 6.5 12a6.5 6.5 0 0 1-13 0c0-5 6.5-12 6.5-12Z"/>
+    </symbol>
+    <symbol id="i-hok-a" viewBox="0 0 24 28">
+      <path d="M12 4.5V2.7"/><path d="M12 3.5c.9-.6 1.8-.7 2.6-.2"/>
+      <circle cx="12" cy="7.4" r="2.9"/>
+      <path d="M7.6 10.4h8.8"/><path d="M11.3 10.4c-.4 1.7-.5 3-.1 4.2M12.7 10.4c.4 1.7.5 3 .1 4.2"/>
+      <circle cx="12" cy="15.8" r="1.1"/><path d="M12 16.9v1.6"/>
+      <path d="M9.7 18.5c-1.3 1-2.1 2.2-2.1 3.2 0 1.1 1 1.8 2.1 1.8h4.6c1.1 0 2.1-.7 2.1-1.8 0-1-.8-2.2-2.1-3.2"/>
+      <path d="M16.4 20.4c3.8.2 5.6 1.6 5.6 3.5 0 2-2.6 3-6.9 3.1"/><path d="M14.6 27h-5.4"/>
+      <circle fill="currentColor" stroke="none" cx="8.7" cy="27" r=".45"/>
+    </symbol>
+    <symbol id="i-hok-g" viewBox="0 0 24 28">
+      <path d="M12 4.9V3.1"/><path d="M12 3.9c1-.7 2-.8 2.9-.2"/>
+      <circle cx="10.8" cy="6.4" r="1.5"/><circle cx="13.2" cy="6.4" r="1.5"/><circle cx="12" cy="8.9" r="1.5"/>
+      <path d="M7.6 10.4h8.8"/><path d="M11.3 10.4c-.4 1.7-.5 3-.1 4.2M12.7 10.4c.4 1.7.5 3 .1 4.2"/>
+      <circle cx="12" cy="15.8" r="1.1"/><path d="M12 16.9v1.6"/>
+      <path d="M9.7 18.5c-1.3 1-2.1 2.2-2.1 3.2 0 1.1 1 1.8 2.1 1.8h4.6c1.1 0 2.1-.7 2.1-1.8 0-1-.8-2.2-2.1-3.2"/>
+      <path d="M16.4 20.4c3.8.2 5.6 1.6 5.6 3.5 0 2-2.6 3-6.9 3.1"/><path d="M14.6 27h-5.4"/>
+      <circle fill="currentColor" stroke="none" cx="8.7" cy="27" r=".45"/>
+    </symbol>
+    <symbol id="i-hok-m" viewBox="0 0 24 28">
+      <path d="M12 2.9c-.55-.65.2-1.05-.2-1.9"/>
+      <circle cx="10.8" cy="4.8" r="1.25"/><circle cx="13.1" cy="5.1" r=".95"/><circle cx="14.35" cy="5.35" r=".7"/>
+      <path d="M9.6 6h4.8"/><path d="M10.1 6l.75 3a1.2 1.2 0 0 0 1.16.9h.18a1.2 1.2 0 0 0 1.16-.9L14.1 6"/>
+      <path d="M7.6 10.4h8.8"/><path d="M11.3 10.4c-.4 1.7-.5 3-.1 4.2M12.7 10.4c.4 1.7.5 3 .1 4.2"/>
+      <circle cx="12" cy="15.8" r="1.1"/><path d="M12 16.9v1.6"/>
+      <path d="M9.7 18.5c-1.3 1-2.1 2.2-2.1 3.2 0 1.1 1 1.8 2.1 1.8h4.6c1.1 0 2.1-.7 2.1-1.8 0-1-.8-2.2-2.1-3.2"/>
+      <path d="M16.4 20.4c3.8.2 5.6 1.6 5.6 3.5 0 2-2.6 3-6.9 3.1"/><path d="M14.6 27h-5.4"/>
+      <circle fill="currentColor" stroke="none" cx="8.7" cy="27" r=".45"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ====== مفاتيح الحالة ====== -->
+<input class="st" type="radio" name="lang" id="lang-pick" checked>
+<input class="st" type="radio" name="lang" id="lang-en">
+<input class="st" type="radio" name="lang" id="lang-ar">
+<input class="st" type="radio" name="lang" id="lang-ku">
+<input class="st" type="checkbox" id="theme">
+<input class="st" type="radio" name="filter" id="f-all" checked>
+<input class="st" type="radio" name="filter" id="f-main">
+<input class="st" type="radio" name="filter" id="f-drinks">
+<input class="st" type="radio" name="filter" id="f-hookah">
+
+<div class="site">
+  <div class="decor" aria-hidden="true"></div>
+
+  <!-- ============ شاشة اختيار اللغة ============ -->
+  <section class="screen screen-lang">
+    <div class="lang-wrap">
+      <div class="seal la" style="--d:0ms">
+        <svg class="seal-svg" viewBox="0 0 340 340" aria-hidden="true">
+          <defs>
+            <linearGradient id="sealMetal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FBF2D4"/>
+              <stop offset=".42" stop-color="#EACB7F"/>
+              <stop offset=".74" stop-color="#B8912F"/>
+              <stop offset="1" stop-color="#E8CD85"/>
+            </linearGradient>
+            <path id="arcTop" d="M 42 170 A 128 128 0 0 1 298 170" fill="none"/>
+            <path id="arcBot" d="M 20 170 A 150 150 0 0 0 320 170" fill="none"/>
+          </defs>
+          <circle cx="170" cy="170" r="163" fill="none" stroke="url(#sealMetal)" stroke-width="2.5"/>
+          <circle cx="170" cy="170" r="155.5" fill="none" stroke="url(#sealMetal)" stroke-width="1" opacity=".55"/>
+          <circle class="seal-dots" cx="170" cy="170" r="124" fill="none" stroke="url(#sealMetal)"
+                  stroke-width="2.4" stroke-linecap="round" stroke-dasharray=".4 8.6" opacity=".85"/>
+          <text class="seal-txt"><textPath href="#arcTop" startOffset="50%" text-anchor="middle">SULI</textPath></text>
+          <text class="seal-txt"><textPath href="#arcBot" startOffset="50%" text-anchor="middle">LOUNGE</textPath></text>
+          <rect x="25.5" y="164.5" width="11" height="11" transform="rotate(45 31 170)" fill="url(#sealMetal)"/>
+          <rect x="303.5" y="164.5" width="11" height="11" transform="rotate(45 309 170)" fill="url(#sealMetal)"/>
+        </svg>
+        <div class="seal-core">
+          <div class="s-row">
+            <span class="s-num">11</span><span class="s-colon">:</span><span class="s-num">11</span>
+          </div>
+          <i class="s-div"></i>
+          <span class="s-tag">DIGITAL MENU</span>
+        </div>
+      </div>
+      <p class="tri la" style="--d:170ms">
+        <span>Welcome</span><i>·</i><span>أهلاً وسهلاً</span><i>·</i><span class="ku">بەخێربێیت</span>
+      </p>
+      <p class="hint la" style="--d:230ms">
+        <span>Please choose your language</span><i>·</i><span>الرجاء اختيار اللغة</span><i>·</i><span class="ku">تکایە زمانێک هەڵبژێرە</span>
+      </p>
+      <div class="lang-btns">
+        <label class="lang-btn la" style="--d:300ms" for="lang-en">English</label>
+        <label class="lang-btn la" style="--d:370ms" for="lang-ar">العربية</label>
+        <label class="lang-btn la ku" style="--d:440ms" for="lang-ku">کوردی</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ شاشة المنيو ============ -->
+  <section class="screen screen-menu">
+    <div class="sticky-head">
+      <div class="topbar-in">
+        <div class="brand-row">
+          <span class="brand-num" role="img" aria-label="Suli 11:11 Lounge">11<i>:</i>11</span>
+          <div class="sub">
+            <span class="t t-en">Digital Menu</span><span class="t t-ar">القائمة الرقمية</span><span class="t t-ku">مێنیوی دیجیتاڵ</span>
+          </div>
+        </div>
+        <div class="actions">
+          <label class="pill" for="lang-pick" aria-label="change language">
+            <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span class="t t-en">English</span><span class="t t-ar">العربية</span><span class="t t-ku">کوردی</span>
+          </label>
+          <label class="icon-btn" for="theme" aria-label="toggle theme">
+            <svg class="ic icon-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="ic icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          </label>
+        </div>
+      </div>
+      <nav class="chips-in" aria-label="filters">
+        <label class="chip" for="f-all">
+          <svg class="ic"><use href="#i-grid"/></svg>
+          <span class="t t-en">All</span><span class="t t-ar">الكل</span><span class="t t-ku">هەموو</span>
+        </label>
+        <label class="chip" for="f-main">
+          <svg class="ic"><use href="#i-dishes"/></svg>
+          <span class="t t-en">Main Dishes</span><span class="t t-ar">الأطباق الرئيسية</span><span class="t t-ku">خواردنە سەرەکییەکان</span>
+        </label>
+        <label class="chip" for="f-drinks">
+          <svg class="ic"><use href="#i-cup"/></svg>
+          <span class="t t-en">Cold Drinks</span><span class="t t-ar">المشروبات الباردة</span><span class="t t-ku">خواردنەوە ساردەکان</span>
+        </label>
+        <label class="chip" for="f-hookah">
+          <svg class="ic"><use href="#i-nargile"/></svg>
+          <span class="t t-en">Hookah</span><span class="t t-ar">أراكيل</span><span class="t t-ku">نەرگیلە</span>
+        </label>
+      </nav>
+    </div>
+
+    <main class="wrap">
+      <!-- ===== الأطباق الرئيسية ===== -->
+      <section class="menu-sec sec-main" style="--so:0ms">
+        <div class="sec-head anim" style="--si:0">
+          <span class="sic-b"><svg class="ic"><use href="#i-dishes"/></svg></span>
+          <h2><span class="t t-en">Main Dishes</span><span class="t t-ar">الأطباق الرئيسية</span><span class="t t-ku">خواردنە سەرەکییەکان</span></h2>
+        </div>
+        <div class="grid">
+          <article class="card anim" style="--si:1">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-fries"/></svg></span>
+              <i class="ph" style="background-image:url('images/french-fries.jpg'),url('https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">French Fries</span><span class="t t-ar">بطاطا مقلية</span><span class="t t-ku">پەتاتەی سوور</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>3,000</b></div>
+            </div>
+          </article>
+          <article class="card anim" style="--si:2">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-chicken"/></svg></span>
+              <i class="ph" style="background-image:url('images/grilled-chicken.jpg'),url('https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/616354/pexels-photo-616354.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Grilled Chicken</span><span class="t t-ar">دجاج مشوي</span><span class="t t-ku">مریشکی برژاو</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>8,000</b></div>
+            </div>
+          </article>
+          <article class="card anim" style="--si:3">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-kebab"/></svg></span>
+              <i class="ph" style="background-image:url('images/kebab.jpg'),url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/1105325/pexels-photo-1105325.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Kebab</span><span class="t t-ar">كباب</span><span class="t t-ku">کەباب</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>5,000</b></div>
+            </div>
+          </article>
+          <article class="card anim" style="--si:4">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-grill"/></svg></span>
+              <i class="ph" style="background-image:url('images/mixed-grill.jpg'),url('https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/1256855/pexels-photo-1256855.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Mixed Grill</span><span class="t t-ar">مشاوي مشكلة</span><span class="t t-ku">مشاوی تێکەڵ</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>15,000</b></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== المشروبات الباردة ===== -->
+      <section class="menu-sec sec-drinks" style="--so:180ms">
+        <div class="sec-head anim" style="--si:0">
+          <span class="sic-b"><svg class="ic"><use href="#i-cup"/></svg></span>
+          <h2><span class="t t-en">Cold Drinks</span><span class="t t-ar">المشروبات الباردة</span><span class="t t-ku">خواردنەوە ساردەکان</span></h2>
+        </div>
+        <div class="grid">
+          <article class="card anim" style="--si:1">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-juice"/></svg></span>
+              <i class="ph" style="background-image:url('images/fresh-juice.jpg'),url('https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/1337825/pexels-photo-1337825.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Fresh Juice</span><span class="t t-ar">عصير طازج</span><span class="t t-ku">شەربەتی تازە</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>3,500</b></div>
+            </div>
+          </article>
+          <article class="card anim" style="--si:2">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-pepsi"/></svg></span>
+              <i class="ph" style="background-image:url('images/pepsi.jpg'),url('https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/2775835/pexels-photo-2775835.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Pepsi</span><span class="t t-ar">بيبسي</span><span class="t t-ku">پێپسی</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>1,500</b></div>
+            </div>
+          </article>
+          <!-- 💧 بل ماء 11:11 — صورة محلية بالأولوية -->
+          <article class="card card-1111 anim" style="--si:3">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-drop"/></svg></span>
+              <span class="badge-1111">Premium 11:11</span>
+              <i class="ph" style="background-image:url('images/water-1111.jpeg'),url('https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/1000084/pexels-photo-1000084.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">11:11 Water 750ml</span><span class="t t-ar">بل ماء 11:11</span><span class="t t-ku">ئاوی 11:11</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>1,000</b></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== الأراكيل — صورك المحلية بالأولوية + احتياط أونلاين ===== -->
+      <section class="menu-sec sec-hookah" style="--so:360ms">
+        <div class="sec-head anim" style="--si:0">
+          <span class="sic-b"><svg class="ic"><use href="#i-nargile"/></svg></span>
+          <h2><span class="t t-en">Hookah</span><span class="t t-ar">أراكيل</span><span class="t t-ku">نەرگیلە</span></h2>
+        </div>
+        <div class="grid">
+          <!-- 🍎 أراكيل تفاح ← images/hookah-apple.jpg -->
+          <article class="card anim" style="--si:1">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-hok-a"/></svg></span>
+              <i class="ph" style="background-image:url('images/hookah-apple.jpeg'),url('https://images.unsplash.com/photo-1597817109745-c418f4875230?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/2488312/pexels-photo-2488312.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Apple Hookah</span><span class="t t-ar">أراكيل تفاح</span><span class="t t-ku">نەرگیلەی سێو</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>10,000</b></div>
+            </div>
+          </article>
+          <!-- 🍇 أراكيل عنب ← images/hookah-grape.jpg -->
+          <article class="card anim" style="--si:2">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-hok-g"/></svg></span>
+              <i class="ph" style="background-image:url('images/hookah-grape.jpeg'),url('https://images.unsplash.com/photo-1604357202043-18a0ae313429?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/3050360/pexels-photo-3050360.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Grape Hookah</span><span class="t t-ar">أراكيل عنب</span><span class="t t-ku">نەرگیلەی ترێ</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>10,000</b></div>
+            </div>
+          </article>
+          <!-- 🍊 أراكيل مشكل ← images/hookah-mix.jpg -->
+          <article class="card anim" style="--si:3">
+            <div class="thumb">
+              <span class="fb"><svg class="ic"><use href="#i-hok-m"/></svg></span>
+              <i class="ph" style="background-image:url('images/hookah-mix.jpeg'),url('https://images.unsplash.com/photo-1561414927-6d86591d0c4f?w=800&q=80&auto=format&fit=crop'),url('https://images.pexels.com/photos/3124166/pexels-photo-3124166.jpeg?auto=compress&cs=tinysrgb&w=800')" aria-hidden="true"></i>
+            </div>
+            <div class="meta">
+              <h3><span class="t t-en">Mixed Hookah</span><span class="t t-ar">أراكيل مشكل</span><span class="t t-ku">نەرگیلەی تێکەڵ</span></h3>
+              <div class="price"><small class="cur"><span class="t t-en">IQD</span><span class="t t-ar t-ku">د.ع</span></small><b>12,000</b></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="foot-line"></div>
+      <p>
+        <span class="t t-en">Crafted with passion · All rights reserved © 2025</span>
+        <span class="t t-ar">صُنع بشغف · جميع الحقوق محفوظة © 2025</span>
+        <span class="t t-ku">بە پەرۆشەوە دروستكراوە · هەموو مافەكان پارێزراون © 2025</span>
+      </p>
+    </footer>
+  </section>
+
+  <!-- ============ ستارة الانتقال + سبلاش ============ -->
+  <div class="curtain" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="splash" aria-hidden="true">
+    <div class="splash-box">
+      <div class="splash-dash"></div>
+      <div class="splash-word">
+        <span class="t t-en">Digital Menu</span><span class="t t-ar">القائمة الرقمية</span><span class="t t-ku">مێنیوی دیجیتاڵ</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
